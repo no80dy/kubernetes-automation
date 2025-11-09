@@ -105,8 +105,6 @@ resource "yandex_compute_instance_group" "k8s-compute-group" {
     }
 
     metadata = {
-      # ssh-keys = "ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCj49YdMpgfHfR1HvZTAUO6d6O45sXN/jt5PalppkFfrBwVGk6RLbeRYDbLuMm0Ay/mQbme503C/8mbDMKlk2+LwPuGdiu46Ao9O8nV8oUlgk5AVwYFbkzqjTxCZfE///KZtoALng2mcQ9AsniGHlWA+9brIHlUavSxMB8IB6Nq4MGHt81L2seP66AHWkHrl19Hu7PZotnQDgW3mcBBeKMuU8hkgbMvxYBe6IFkvMkcE+2XLWFaCP6nA+RAWZOBUctG26+TRVTb3cFMz5ckUiBUp4N53V6BhPz15ZhUw4VQJvjTwQJ/urx+B4vhLSQtBOdLDHNZJ9l/3J+FHqbQDfEx2niajmsAxSRt1x9+zcJmZYysfN1QtthSopR/6kuStnbqIyHmLHQKz6gL/CMNAwVWkAxiiShk3KvcfX/00ufzdghU9mV+PWInPW45IaVxziRSGGm3E0MLdiTz7nqKOHlXoYyRndtnShYRLKEgtSh0X7uJksVRAkT6jOKz9Z9G0BnsdOkGdG0LapTAD//yQq8BXPZZ8SOloekOGRKF0ZQHB7Z/fwpl4LNfOrBdFBYYrVhMyHYKx7nj7uIOr4ABxehWbxH4k3dpHQgGvaK6nahjwzo8m3Pjz8Zhr4Fh+7v5DgLa4aLl4+gcXZzB7MF2A1WrIa5hnMF5WdCDMdbH+m5HCw== your_email@example.com"
-      # ssh-keys = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6L7exrkn90lGNIS06pOG3RCDOassizfnB4DV29R1Cs korvin@DESKTOP-95SH6OQ"
       user-data = file("user-data.yaml")
     }
   }
