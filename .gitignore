@@ -1,0 +1,6 @@
+.vagrant/
+
+terraform.tfvars
+user-data.yaml
+.env
+key.json

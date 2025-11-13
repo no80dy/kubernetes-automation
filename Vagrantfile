@@ -1,0 +1,30 @@
+if File.exist?('.env')
+  File.foreach('.env') do |line|
+    line.strip!
+    next if line.empty? || line.start_with?('#')
+    key, value = line.split('=', 2)
+    next unless key && value
+    key.strip!
+    value.strip!
+    value = value.gsub(/\A['"]|['"]\z/, '')
+    ENV[key] = value
+  end
+end
+
+Vagrant.configure("2") do |config|
+  envHostFolder = ENV['HOST_FOLDER']
+  envVirtualMachineFolder = ENV['VIRTUAL_MACHINE_FOLDER']
+
+  raise "HOST_FOLDER not defined in .env" unless envHostFolder
+  raise "VIRTUAL_MACHINE_FOLDER not defined in .env" unless envVirtualMachineFolder
+
+  config.vm.box = "bento/ubuntu-22.04"
+  config.vm.box_version = "202510.26.0"
+
+  config.vm.synced_folder envHostFolder, envVirtualMachineFolder
+  config.vm.provider :virtualbox do |vb|
+    vb.memory = "4096"
+    vb.cpus = 2
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  end
+end
