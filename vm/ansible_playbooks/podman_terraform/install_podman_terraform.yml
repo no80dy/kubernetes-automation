@@ -1,17 +1,15 @@
----
-- name: Build minimal Terraform Docker image
+- name: Build minimal Podman image
   hosts: localhost
-  become: true
+  gather_facts: false
 
   vars:
     image_name: "terraform-alpine"
-    dockerfile_path: "./Dockerfile"
+    dockerfile_path: "."
 
   tasks:
-    - name: Build Docker image
-      community.docker.docker_image:
-        build:
-          path: "{{ dockerfile_path | dirname }}"
+    - name: Build Podman image
+      containers.podman.podman_image:
         name: "{{ image_name }}"
-        tag: latest
-        state: present
+        path: "{{ dockerfile_path }}"
+        build:
+          format: docker
