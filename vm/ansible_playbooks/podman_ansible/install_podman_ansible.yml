@@ -10,6 +10,7 @@
   tasks:
     - name: Build Docker image
       community.docker.docker_image:
+        source: build
         build:
           path: "{{ dockerfile_path | dirname }}"
         name: "{{ image_name }}"
