@@ -1,16 +1,14 @@
----
-- name: Build minimal Ansible Docker image
+- name: Build minimal Podman image
   hosts: localhost
-  become: true
+  gather_facts: false
 
   vars:
     image_name: "ansible-alpine"
+    dockerfile_path: "."
 
   tasks:
-    - name: Build Docker image
-      community.docker.docker_image:
-        source: build
-        build:
-          path: "."
-          dockerfile: "Dockerfile"
+    - name: Build Podman image
+      community.general.podman_image:
         name: "{{ image_name }}"
+        build:
+          path: "{{ dockerfile_path }}"
