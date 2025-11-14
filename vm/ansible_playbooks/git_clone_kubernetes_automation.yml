@@ -1,0 +1,28 @@
+---
+- name: Clone Git repository
+  hosts: all
+  become: true
+
+  vars:
+    repo_url: "https://github.com/no80dy/kubernetes-automation.git"
+    dest_path: "/home/vagrant/kubernetes-automation"
+    repo_version: "master"
+
+  tasks:
+    - name: Ensure Git is installed
+      apt:
+        name: git
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Clone the repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ dest_path }}"
+        version: "{{ repo_version }}"
+        force: yes
+        update: yes
+
+    - name: Show cloned repository path
+      debug:
+        msg: "Repository cloned to {{ dest_path }}"
