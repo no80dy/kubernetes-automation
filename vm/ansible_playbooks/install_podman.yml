@@ -1,6 +1,6 @@
 ---
 - name: Install Podman on Debian 12 with docker alias
-  hosts: all
+  hosts: localhost
   become: true
 
   tasks:
