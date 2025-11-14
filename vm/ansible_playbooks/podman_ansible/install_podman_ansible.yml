@@ -14,5 +14,3 @@
         build:
           path: "{{ dockerfile_path | dirname }}"
         name: "{{ image_name }}"
-        tag: latest
-        state: present
