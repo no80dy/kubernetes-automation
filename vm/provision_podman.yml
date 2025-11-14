@@ -1,0 +1,46 @@
+---
+- name: Install Podman on Debian 12 with docker alias
+  hosts: all
+  become: true
+
+  tasks:
+
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Podman and recommended tools
+      apt:
+        name:
+          - podman
+          - uidmap
+          - slirp4netns
+          - containernetworking-plugins
+        state: present
+
+    - name: Create docker alias symlink to podman
+      file:
+        src: /usr/bin/podman
+        dest: /usr/local/bin/docker
+        state: link
+        force: true
+        mode: '0755'
+
+    - name: Verify Podman installation
+      command: podman --version
+      register: podman_version_output
+      changed_when: false
+
+    - name: Show installed Podman version
+      debug:
+        msg: "{{ podman_version_output.stdout }}"
+
+    - name: Verify docker alias
+      command: docker --version
+      register: docker_version_output
+      changed_when: false
+
+    - name: Show docker alias result
+      debug:
+        msg: "{{ docker_version_output.stdout }}"
