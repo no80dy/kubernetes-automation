@@ -1,6 +1,6 @@
 ---
 - name: Clone Git repository
-  hosts: all
+  hosts: localhost
   become: true
 
   vars:
