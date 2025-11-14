@@ -1,0 +1,17 @@
+---
+- name: Build minimal Ansible Docker image
+  hosts: localhost
+  become: true
+
+  vars:
+    image_name: "ansible-alpine"
+    dockerfile_path: "./Dockerfile"
+
+  tasks:
+    - name: Build Docker image
+      community.docker.docker_image:
+        build:
+          path: "{{ dockerfile_path | dirname }}"
+        name: "{{ image_name }}"
+        tag: latest
+        state: present

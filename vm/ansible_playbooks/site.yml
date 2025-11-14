@@ -1,5 +1,5 @@
 ---
 - import_playbook: git_clone_kubernetes_automation.yml
 - import_playbook: install_podman.yml
-# - import_playbook: install_podman_ansible.yml
-# - import_playbook: install_podman_terraform.yml
+- import_playbook: podman_ansible/install_podman_ansible.yml
+- import_playbook: podman_terraform/install_podman_terraform.yml
