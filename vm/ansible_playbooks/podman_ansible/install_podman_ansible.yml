@@ -8,7 +8,8 @@
 
   tasks:
     - name: Build Podman image
-      community.general.podman_image:
+      containers.podman.podman_image:
         name: "{{ image_name }}"
+        path: "{{ dockerfile_path }}"
         build:
-          path: "{{ dockerfile_path }}"
+          format: docker
