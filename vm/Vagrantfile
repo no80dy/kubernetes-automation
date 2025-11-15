@@ -19,12 +19,9 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "202510.26.0"
 
   envHostFolder = ENV['HOST_FOLDER']
-  envVirtualMachineFolder = ENV['VIRTUAL_MACHINE_FOLDER']
-
   raise "HOST_FOLDER not defined in .env" unless envHostFolder
-  raise "VIRTUAL_MACHINE_FOLDER not defined in .env" unless envVirtualMachineFolder
 
-  config.vm.synced_folder "./terraform", "/home/vagrant/secrets", owner: "vagrant", group: "vagrant"
+  config.vm.synced_folder "#{envHostFolder}", "/home/vagrant/secrets", owner: "vagrant", group: "vagrant"
 
   config.vm.provider :virtualbox do |vb|
     vb.memory = "4096"
