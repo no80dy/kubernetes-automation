@@ -5,7 +5,7 @@ on:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: production
 
@@ -25,6 +25,7 @@ jobs:
     - name: Write Service Account key file
       run: |
         echo '${{ secrets.YC_SA_JSON_KEY }}' > key.json
+        echo '${{ secrets.YC_USER_DATA }}' > user-data.yaml
 
     - name: Terraform Init
       run: terraform init
@@ -35,6 +36,15 @@ jobs:
     - name: Terraform Plan
       run: |
         terraform plan \
-          -var "cloud_id=${{ secrets.YC_CLOUD_ID }}"
-          -var "folder_id=${{ secrets.YC_FOLDER_ID }}"
-          -var "service_account_key_file=key.json"
+          -var "cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+          -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
+          -var "service_account_key_file=key.json" \
+          -var "zone=ru-central1-a"
+
+    - name: Terraform Apply
+      run: |
+        terraform apply -auto-approve \
+            -var "cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+            -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
+            -var "service_account_key_file=key.json" \
+            -var "zone=ru-central1-a"
