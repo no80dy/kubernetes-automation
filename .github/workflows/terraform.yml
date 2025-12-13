@@ -43,7 +43,7 @@ jobs:
 
     - name: Terraform Apply
       run: |
-        terraform apply \
+        terraform apply -auto-approve \
             -var "cloud_id=${{ secrets.YC_CLOUD_ID }}" \
             -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
             -var "service_account_key_file=key.json" \
