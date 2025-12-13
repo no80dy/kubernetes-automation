@@ -1,0 +1,39 @@
+name: 'Destroy Yandex Cloud Infrastructure using Terraform'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: 'Terraform Destroy'
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.9.5
+
+    - name: Write Service Account key file
+      run: |
+        echo '${{ secrets.YC_SA_JSON_KEY }}' > key.json
+        echo '${{ secrets.YC_USER_DATA }}' > user-data.yaml
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Destroy
+      run: |
+        terraform destroy -auto-approve \
+            -var "cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+            -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
+            -var "service_account_key_file=key.json" \
+            -var "zone=ru-central1-a"
