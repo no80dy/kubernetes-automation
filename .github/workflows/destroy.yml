@@ -1,3 +1,5 @@
+# TODO: Настроить backend для сохранения состояния tfstate, чтобы destroy отрабатывал корректно
+
 name: 'Destroy Yandex Cloud Infrastructure using Terraform'
 
 on:
