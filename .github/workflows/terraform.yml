@@ -40,3 +40,11 @@ jobs:
           -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
           -var "service_account_key_file=key.json" \
           -var "zone=ru-central1-a"
+
+    - name: Terraform Apply
+      run: |
+        terraform apply \
+            -var "cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+            -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
+            -var "service_account_key_file=key.json" \
+            -var "zone=ru-central1-a"
