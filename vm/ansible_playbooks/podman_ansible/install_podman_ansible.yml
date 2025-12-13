@@ -1,0 +1,15 @@
+- name: Build minimal Podman image
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    image_name: "ansible-alpine"
+    dockerfile_path: "."
+
+  tasks:
+    - name: Build Podman image
+      containers.podman.podman_image:
+        name: "{{ image_name }}"
+        path: "{{ dockerfile_path }}"
+        build:
+          format: docker
