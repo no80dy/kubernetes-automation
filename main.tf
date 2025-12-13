@@ -69,7 +69,7 @@ resource "yandex_compute_instance_group" "k8s-compute-group" {
 
   scale_policy {
     fixed_scale {
-      size = 4
+      size = 1
     }
   }
 
@@ -86,8 +86,8 @@ resource "yandex_compute_instance_group" "k8s-compute-group" {
     platform_id = "standard-v3"
 
     resources {
-      cores  = 4
-      memory = 8
+      cores  = 2
+      memory = 4
     }
 
     boot_disk {
