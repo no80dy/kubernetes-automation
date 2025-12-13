@@ -34,7 +34,7 @@ jobs:
       - name: Generate inventory from template
         run: |
           cd kubespray
-          cp -r ${{ github.workspace }}/kubespray-config/* inventory/k8s/
+          cp -rfp ${{ github.workspace }}/kubespray-config/* inventory/k8s/
 
           python3 -c "
             import yaml, jinja2, os
