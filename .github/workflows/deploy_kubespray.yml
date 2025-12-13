@@ -14,14 +14,13 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
-          pip install ansible==7.6.0 netaddr jinja2
           git clone https://github.com/kubernetes-sigs/kubespray.git
           cd kubespray
-          git checkout v2.19.0
+          git checkout v2.26.0
           pip install -r requirements.txt
 
       - name: Setup SSH
@@ -54,6 +53,7 @@ jobs:
           ansible-playbook -i ${{ steps.inventory.outputs.inventory }} \
             --private-key ~/.ssh/id_rsa \
             --user ${{ secrets.ANSIBLE_USER }} \
+            --become --become-user=root \
             cluster.yml
 
       - name: Verify cluster
