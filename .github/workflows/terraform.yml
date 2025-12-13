@@ -35,6 +35,6 @@ jobs:
     - name: Terraform Plan
       run: |
         terraform plan \
-          -var "cloud_id=${{ secrets.YC_CLOUD_ID }}"
-          -var "folder_id=${{ secrets.YC_FOLDER_ID }}"
+          -var "cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+          -var "folder_id=${{ secrets.YC_FOLDER_ID }}" \
           -var "service_account_key_file=key.json"
