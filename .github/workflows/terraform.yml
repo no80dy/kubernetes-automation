@@ -25,6 +25,7 @@ jobs:
     - name: Write Service Account key file
       run: |
         echo '${{ secrets.YC_SA_JSON_KEY }}' > key.json
+        echo '${{ secrets.YC_USER_DATA }}' > user-data.yaml
 
     - name: Terraform Init
       run: terraform init
