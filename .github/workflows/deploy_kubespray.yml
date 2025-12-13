@@ -31,14 +31,28 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VM_IPS }} >> ~/.ssh/known_hosts
 
-      - name: Generate inventory
-        id: inventory
+      - name: Generate inventory from template
         run: |
           cd kubespray
-          cp -rfp inventory/sample inventory/k8s
-          declare -a IPS=(${{ secrets.VM_IPS }})
-          CONFIG_FILE=inventory/k8s/hosts.yaml python3 contrib/inventory_builder/inventory.py "${IPS[@]}"
-          echo "inventory=inventory/k8s/hosts.yaml" >> $GITHUB_OUTPUT
+          cp -r ${{ github.workspace }}/kubespray-config/* inventory/k8s/
+
+          python3 -c "
+            import yaml, jinja2, os
+            template = jinja2.Template(open('inventory/k8s/hosts-template.yaml.j2').read())
+            data = {
+                'nodes': ['node1','node2'],
+                'public_ips': os.environ['VM_PUBLIC_IPS'].split(),
+                'private_ips': os.environ['VM_PRIVATE_IPS'].split(),
+                'control_plane_nodes': ['node1','node2'],
+                'all_nodes': ['node1','node2'],
+                'etcd_nodes': ['node1','node2']
+            }
+            with open('inventory/k8s/hosts.yaml', 'w') as f:
+                f.write(template.render(**data))
+          "
+        env:
+          VM_PUBLIC_IPS: ${{ secrets.VM_PUBLIC_IPS }}
+          VM_PRIVATE_IPS: ${{ secrets.VM_PRIVATE_IPS }}
 
       - name: Configure addons
         run: |

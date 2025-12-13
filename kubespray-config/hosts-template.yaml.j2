@@ -1,0 +1,19 @@
+all:
+  hosts:
+{% for i, node in enumerate(nodes) %}
+    {{ node }}:
+      ansible_host: {{ public_ips[i] }}
+      ip: {{ private_ips[i] }}
+      access_ip: {{ public_ips[i] }}
+{% endfor %}
+  children:
+    kube_control_plane:
+      hosts: {{ control_plane_nodes }}
+    kube_node:
+      hosts: {{ all_nodes }}
+    etcd:
+      hosts: {{ etcd_nodes }}
+    k8s_cluster:
+      children:
+        - kube_control_plane
+        - kube_node
